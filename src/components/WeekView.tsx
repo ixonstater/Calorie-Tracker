@@ -5,6 +5,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import EditIcon from '@mui/icons-material/Edit';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db';
+import DailyLog from './DailyLog';
 import { getCurrentMondayDate, getWeekDates, formatWeekRange, getDayAbbr, getDateNumber } from '../utils/date';
 
 const today = new Date();
@@ -112,9 +113,11 @@ const WeekView: React.FC = () => {
                 })}
             </Tabs>
 
-            {/* Daily Log Panel (to be implemented) */}
+            {/* Daily Log Panel */}
             <Box sx={{ mt: 2 }}>
-                Daily Log (to be implemented)
+                {week && (
+                    <DailyLog weekId={week.id} date={weekDates[selectedDayIndex]} />
+                )}
             </Box>
         </Box>
     );
