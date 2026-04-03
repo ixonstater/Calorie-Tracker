@@ -11,9 +11,6 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { db, Food } from '../db';
 import FoodForm from './FoodForm';
 
-const categories = [
-  'Protein', 'Carbs', 'Fat', 'Dairy', 'Vegetable', 'Fruit', 'Snack', 'Other'
-];
 
 const FoodDatabase: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   const foods = useLiveQuery(() => db.foods.toArray(), []);

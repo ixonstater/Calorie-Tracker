@@ -20,16 +20,31 @@ interface FoodFormProps {
 const FoodForm: React.FC<FoodFormProps> = ({ open, onClose, onSave, initial }) => {
     const [name, setName] = useState(initial?.name || '');
     const [category, setCategory] = useState(initial?.category || '');
-    const [calories, setCalories] = useState(initial?.calories || 0);
-    const [protein, setProtein] = useState(initial?.protein || 0);
-    const [carbs, setCarbs] = useState(initial?.carbs || 0);
-    const [fat, setFat] = useState(initial?.fat || 0);
-    const [servingSize, setServingSize] = useState(initial?.servingSize || 0);
+    const [calories, setCalories] = useState(initial?.calories ?? '');
+    const [protein, setProtein] = useState(initial?.protein ?? '');
+    const [carbs, setCarbs] = useState(initial?.carbs ?? '');
+    const [fat, setFat] = useState(initial?.fat ?? '');
+    const [servingSize, setServingSize] = useState(initial?.servingSize ?? '');
     const [servingUnit, setServingUnit] = useState(initial?.servingUnit || 'g');
 
     const handleSave = () => {
-        if (!name || calories <= 0 || protein < 0 || carbs < 0 || fat < 0 || servingSize <= 0) return;
-        onSave({ name, category, calories, protein, carbs, fat, servingSize, servingUnit });
+        // Replace falsy values with 0 for numbers
+        const safeCalories = calories === '' ? 0 : Number(calories);
+        const safeProtein = protein === '' ? 0 : Number(protein);
+        const safeCarbs = carbs === '' ? 0 : Number(carbs);
+        const safeFat = fat === '' ? 0 : Number(fat);
+        const safeServingSize = servingSize === '' ? 0 : Number(servingSize);
+        if (!name || safeCalories <= 0 || safeProtein < 0 || safeCarbs < 0 || safeFat < 0 || safeServingSize <= 0) return;
+        onSave({
+            name,
+            category,
+            calories: safeCalories,
+            protein: safeProtein,
+            carbs: safeCarbs,
+            fat: safeFat,
+            servingSize: safeServingSize,
+            servingUnit
+        });
         onClose();
     };
 
@@ -38,7 +53,7 @@ const FoodForm: React.FC<FoodFormProps> = ({ open, onClose, onSave, initial }) =
             <DialogTitle>{initial ? 'Edit Food' : 'Add Food'}</DialogTitle>
             <DialogContent>
                 <Grid container spacing={2} mt={1}>
-                    <Grid size={{ xs: 8 }}>
+                    <Grid size={{ xs: 12 }}>
                         <TextField
                             label="Name"
                             size="small"
@@ -47,7 +62,7 @@ const FoodForm: React.FC<FoodFormProps> = ({ open, onClose, onSave, initial }) =
                             onChange={e => setName(e.target.value)}
                         />
                     </Grid>
-                    <Grid size={{ xs: 4 }}>
+                    <Grid size={{ xs: 12 }}>
                         <TextField
                             label="Category"
                             size="small"
@@ -62,62 +77,57 @@ const FoodForm: React.FC<FoodFormProps> = ({ open, onClose, onSave, initial }) =
                             <MenuItem value="">Other</MenuItem>
                         </TextField>
                     </Grid>
-                    <Grid size={{ xs: 3 }}>
+                    <Grid size={{ xs: 6 }}>
                         <TextField
                             label="Calories"
                             type="number"
                             size="small"
                             fullWidth
                             value={calories}
-                            onChange={e => setCalories(Number(e.target.value))}
-                            inputProps={{ min: 0 }}
+                            onChange={e => setCalories(e.target.value === '' ? '' : Number(e.target.value))}
                         />
                     </Grid>
-                    <Grid size={{ xs: 3 }}>
+                    <Grid size={{ xs: 6 }}>
                         <TextField
                             label="Protein"
                             type="number"
                             size="small"
                             fullWidth
                             value={protein}
-                            onChange={e => setProtein(Number(e.target.value))}
-                            inputProps={{ min: 0 }}
+                            onChange={e => setProtein(e.target.value === '' ? '' : Number(e.target.value))}
                         />
                     </Grid>
-                    <Grid size={{ xs: 3 }}>
+                    <Grid size={{ xs: 6 }}>
                         <TextField
                             label="Carbs"
                             type="number"
                             size="small"
                             fullWidth
                             value={carbs}
-                            onChange={e => setCarbs(Number(e.target.value))}
-                            inputProps={{ min: 0 }}
+                            onChange={e => setCarbs(e.target.value === '' ? '' : Number(e.target.value))}
                         />
                     </Grid>
-                    <Grid size={{ xs: 3 }}>
+                    <Grid size={{ xs: 6 }}>
                         <TextField
                             label="Fat"
                             type="number"
                             size="small"
                             fullWidth
                             value={fat}
-                            onChange={e => setFat(Number(e.target.value))}
-                            inputProps={{ min: 0 }}
+                            onChange={e => setFat(e.target.value === '' ? '' : Number(e.target.value))}
                         />
                     </Grid>
-                    <Grid size={{ xs: 4 }}>
+                    <Grid size={{ xs: 6 }}>
                         <TextField
                             label="Serving Size"
                             type="number"
                             size="small"
                             fullWidth
                             value={servingSize}
-                            onChange={e => setServingSize(Number(e.target.value))}
-                            inputProps={{ min: 0 }}
+                            onChange={e => setServingSize(e.target.value === '' ? '' : Number(e.target.value))}
                         />
                     </Grid>
-                    <Grid size={{ xs: 4 }}>
+                    <Grid size={{ xs: 6 }}>
                         <TextField
                             label="Serving Unit"
                             size="small"

@@ -26,7 +26,7 @@ function App() {
             <CircularProgress color="primary" />
           </Box>
         ) : (
-          <div>
+          <div style={{ padding: 5 }}>
             {screen === 'week' && <WeekView />}
             {screen === 'foodDb' && <FoodDatabase onBack={handleBackToWeek} />}
           </div>

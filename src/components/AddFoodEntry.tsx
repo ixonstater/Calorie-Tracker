@@ -18,7 +18,7 @@ const AddFoodEntry: React.FC<AddFoodEntryProps> = ({ open, onClose, weekId, date
     const foods = useLiveQuery(() => db.foods.toArray(), []);
     const [search, setSearch] = useState('');
     const [selected, setSelected] = useState<Food | null>(null);
-    const [servings, setServings] = useState(1);
+    const [servings, setServings] = useState<number | ''>(1);
     const [saving, setSaving] = useState(false);
 
     const filteredFoods = foods?.filter(f => f.name.toLowerCase().includes(search.toLowerCase())) ?? [];
@@ -29,13 +29,14 @@ const AddFoodEntry: React.FC<AddFoodEntryProps> = ({ open, onClose, weekId, date
     };
 
     const handleAdd = async () => {
-        if (!selected || servings <= 0) return;
+        const safeServings = servings === '' ? 0 : Number(servings);
+        if (!selected || safeServings <= 0) return;
         setSaving(true);
         await db.logs.add({
             weekId,
             date,
             foodId: selected.id!,
-            servings,
+            servings: safeServings,
             timestamp: Date.now(),
         });
         setSaving(false);
@@ -80,11 +81,14 @@ const AddFoodEntry: React.FC<AddFoodEntryProps> = ({ open, onClose, weekId, date
                             label="Servings"
                             inputProps={{ step: 0.25, min: 0.25 }}
                             value={servings}
-                            onChange={e => setServings(Math.max(0.25, Number(e.target.value)))}
+                            onChange={e => {
+                                const val = e.target.value;
+                                setServings(val === '' ? '' : Math.max(0.25, Number(val)));
+                            }}
                             sx={{ width: 120, mr: 2 }}
                         />
                         <Chip
-                            label={`≈ ${Math.round(servings * selected.calories)} kcal`}
+                            label={`≈ ${Math.round((servings === '' ? 0 : servings) * selected.calories)} kcal`}
                             color="primary"
                             size="small"
                             sx={{ ml: 2 }}
@@ -94,7 +98,7 @@ const AddFoodEntry: React.FC<AddFoodEntryProps> = ({ open, onClose, weekId, date
                             fullWidth
                             sx={{ mt: 2 }}
                             onClick={handleAdd}
-                            disabled={servings <= 0 || saving}
+                            disabled={servings === '' || servings <= 0 || saving}
                             startIcon={<AddIcon />}
                         >
                             Add to Log

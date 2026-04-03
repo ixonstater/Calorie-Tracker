@@ -19,8 +19,8 @@ export function useEnsureCurrentWeek() {
         [mondayDate]
     );
 
+
     useEffect(() => {
-        if (week === undefined) return;
         if (week) {
             setLoading(false);
             return;
