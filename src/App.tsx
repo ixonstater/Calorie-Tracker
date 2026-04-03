@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { ThemeProvider, CssBaseline, Container, CircularProgress, Box } from '@mui/material';
 import { theme } from './theme';
+
 import AppHeader from './components/AppHeader';
 import { useEnsureCurrentWeek } from './hooks/useEnsureCurrentWeek';
+import WeekView from './components/WeekView';
+import FoodDatabase from './components/FoodDatabase';
 
 type Screen = 'week' | 'foodDb';
 
@@ -24,14 +27,8 @@ function App() {
           </Box>
         ) : (
           <div>
-            {/* Main content will be rendered here based on screen */}
-            {screen === 'week' && <div>Weekly View (to be implemented)</div>}
-            {screen === 'foodDb' && (
-              <div>
-                <button onClick={handleBackToWeek}>Back</button>
-                Food Database (to be implemented)
-              </div>
-            )}
+            {screen === 'week' && <WeekView />}
+            {screen === 'foodDb' && <FoodDatabase onBack={handleBackToWeek} />}
           </div>
         )}
       </Container>
