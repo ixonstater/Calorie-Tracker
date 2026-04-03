@@ -40,8 +40,8 @@ export class CalorieTrackerDB extends Dexie {
         super('CalorieTracker');
         this.version(DB_VERSION).stores({
             foods: '++id, name, category',
-            weeks: '++id, mondayDate',
-            logs: '++id, weekId, date, foodId',
+            weeks: '++id, &mondayDate',
+            logs: '++id, [weekId+date], weekId, date, foodId',
         });
     }
 }

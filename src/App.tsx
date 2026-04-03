@@ -3,7 +3,7 @@ import { ThemeProvider, CssBaseline, Container, CircularProgress, Box } from '@m
 import { theme } from './theme';
 
 import AppHeader from './components/AppHeader';
-import { useEnsureCurrentWeek } from './hooks/useEnsureCurrentWeek';
+import { ensureCurrentWeek } from './hooks/ensureCurrentWeek';
 import WeekView from './components/WeekView';
 import FoodDatabase from './components/FoodDatabase';
 
@@ -11,7 +11,8 @@ type Screen = 'week' | 'foodDb';
 
 function App() {
   const [screen, setScreen] = useState<Screen>('week');
-  const { loading } = useEnsureCurrentWeek();
+  const [loading, setLoading] = useState(true);
+  ensureCurrentWeek(setLoading);
 
   const handleFoodDbClick = () => setScreen('foodDb');
   const handleBackToWeek = () => setScreen('week');
