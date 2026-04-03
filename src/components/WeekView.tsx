@@ -5,6 +5,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import EditIcon from '@mui/icons-material/Edit';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db';
+import { ensureWeekExists } from '../utils/ensureWeekExists';
 import DailyLog from './DailyLog';
 import GoalsEditor from './GoalsEditor';
 import { getCurrentMondayDate, getWeekDates, formatWeekRange, getDayAbbr, getDateNumber } from '../utils/date';
@@ -41,16 +42,19 @@ const WeekView: React.FC = () => {
     }
 
     // Navigation logic
-    const handlePrevWeek = () => {
+    const handlePrevWeek = async () => {
         const prev = new Date(mondayDate);
         prev.setDate(prev.getDate() - 7);
-        setMondayDate(prev.toISOString().split('T')[0]);
+        const prevMonday = prev.toISOString().split('T')[0];
+        await ensureWeekExists(prevMonday);
+        setMondayDate(prevMonday);
         setSelectedDayIndex(0);
     };
-    const handleNextWeek = () => {
+    const handleNextWeek = async () => {
         const next = new Date(mondayDate);
         next.setDate(next.getDate() + 7);
-        setMondayDate(next.toISOString().split('T')[0]);
+        const nextMonday = next.toISOString().split('T')[0];
+        setMondayDate(nextMonday);
         setSelectedDayIndex(0);
     };
     // Block navigating past current week
