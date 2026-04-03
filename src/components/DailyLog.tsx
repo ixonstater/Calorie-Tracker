@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Paper, Typography, Chip, List, ListItem, ListItemText, IconButton, Divider, Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import AddFoodEntry from './AddFoodEntry';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db';
@@ -17,6 +18,7 @@ const macroColors = {
 };
 
 const DailyLog: React.FC<DailyLogProps> = ({ weekId, date }) => {
+    const [drawerOpen, setDrawerOpen] = React.useState(false);
     // Get all foods and logs for this day
     const foods = useLiveQuery(() => db.foods.toArray(), []);
     const logs = useLiveQuery(
@@ -60,11 +62,14 @@ const DailyLog: React.FC<DailyLogProps> = ({ weekId, date }) => {
                 {logs && foods && logs.map(log => {
                     const food = foods.find(f => f.id === log.foodId);
                     const deleted = !food;
+                    const handleDelete = async () => {
+                        await db.logs.delete(log.id!);
+                    };
                     return (
                         <React.Fragment key={log.id}>
                             <ListItem
                                 secondaryAction={
-                                    <IconButton edge="end" aria-label="Delete entry">
+                                    <IconButton edge="end" aria-label="Delete entry" onClick={handleDelete}>
                                         <DeleteIcon fontSize="small" />
                                     </IconButton>
                                 }
@@ -90,12 +95,19 @@ const DailyLog: React.FC<DailyLogProps> = ({ weekId, date }) => {
                 })}
             </List>
 
-            {/* Add Food Entry Button (to be implemented) */}
+            {/* Add Food Entry Button */}
             <Box sx={{ position: 'sticky', bottom: 0, mt: 2 }}>
-                <Button variant="contained" color="primary" fullWidth startIcon={<AddIcon />}>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    startIcon={<AddIcon />}
+                    onClick={() => setDrawerOpen(true)}
+                >
                     Log Food
                 </Button>
             </Box>
+            <AddFoodEntry open={drawerOpen} onClose={() => setDrawerOpen(false)} weekId={weekId!} date={date} />
         </Box>
     );
 };
