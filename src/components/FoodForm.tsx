@@ -18,14 +18,14 @@ interface FoodFormProps {
 }
 
 const FoodForm: React.FC<FoodFormProps> = ({ open, onClose, onSave, initial }) => {
-    const [name, setName] = useState(initial?.name || '');
-    const [category, setCategory] = useState(initial?.category || '');
+    const [name, setName] = useState(initial?.name ?? '');
+    const [category, setCategory] = useState(initial?.category ?? 'Other');
     const [calories, setCalories] = useState(initial?.calories ?? '');
     const [protein, setProtein] = useState(initial?.protein ?? '');
     const [carbs, setCarbs] = useState(initial?.carbs ?? '');
     const [fat, setFat] = useState(initial?.fat ?? '');
     const [servingSize, setServingSize] = useState(initial?.servingSize ?? '');
-    const [servingUnit, setServingUnit] = useState(initial?.servingUnit || 'g');
+    const [servingUnit, setServingUnit] = useState(initial?.servingUnit ?? 'g');
 
     const handleSave = () => {
         // Replace falsy values with 0 for numbers
@@ -74,7 +74,6 @@ const FoodForm: React.FC<FoodFormProps> = ({ open, onClose, onSave, initial }) =
                             {categories.map(cat => (
                                 <MenuItem key={cat} value={cat}>{cat}</MenuItem>
                             ))}
-                            <MenuItem value="">Other</MenuItem>
                         </TextField>
                     </Grid>
                     <Grid size={{ xs: 6 }}>

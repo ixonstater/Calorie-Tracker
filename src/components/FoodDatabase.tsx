@@ -107,6 +107,7 @@ const FoodDatabase: React.FC<{ onBack: () => void }> = ({ onBack }) => {
 
       {/* Food Form Dialog */}
       <FoodForm
+        key={editFood?.id || "new"}
         open={formOpen}
         onClose={() => setFormOpen(false)}
         onSave={handleSave}
