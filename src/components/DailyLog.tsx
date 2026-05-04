@@ -95,9 +95,12 @@ const DailyLog: React.FC<DailyLogProps> = ({ weekId, date }) => {
       </List>
 
       {/* Add Food Entry Button */}
-      <Box sx={{ position: "sticky", bottom: 0, mt: 2 }}>
-        <Button variant="contained" color="primary" fullWidth startIcon={<AddIcon />} onClick={() => setDrawerOpen(true)}>
+      <Box sx={{ position: "sticky", display: "flex", flexDirection: "column", alignItems: "center", bottom: 0, mt: 2 }}>
+        <Button variant="contained" color="primary" sx={{ width: "100%", maxWidth: 270, textAlign: "left", marginBottom: 2 }} startIcon={<AddIcon />} onClick={() => setDrawerOpen(true)}>
           Log Food
+        </Button>
+        <Button variant="contained" color="primary" sx={{ width: "100%", maxWidth: 270, textAlign: "left" }} startIcon={<AddIcon />}>
+          Log Un-Indexed Food
         </Button>
       </Box>
       <AddFoodEntry open={drawerOpen} onClose={() => setDrawerOpen(false)} weekId={weekId!} date={date} />
