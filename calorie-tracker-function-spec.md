@@ -17,14 +17,14 @@ A React-based weekly calorie and macro tracking application. All data is stored 
 ## Database Schema
 
 ```js
-import Dexie from 'dexie';
+import Dexie from "dexie";
 
-export const db = new Dexie('CalorieTracker');
+export const db = new Dexie("CalorieTracker");
 
 db.version(1).stores({
-  foods: '++id, name, category',
-  weeks: '++id, mondayDate',
-  logs:  '++id, weekId, date, foodId',
+  foods: "++id, name, category",
+  weeks: "++id, mondayDate",
+  logs: "++id, weekId, date, foodId",
 });
 ```
 
@@ -32,42 +32,42 @@ db.version(1).stores({
 
 Stores the user's personal food database.
 
-| Field       | Type   | Description                              |
-|-------------|--------|------------------------------------------|
-| id          | number | Auto-incremented primary key             |
-| name        | string | Food name (e.g., "Chicken Breast")       |
-| category    | string | Optional label (e.g., "Protein", "Snack")|
-| calories    | number | Calories per serving                     |
-| protein     | number | Grams of protein per serving             |
-| carbs       | number | Grams of carbs per serving               |
-| fat         | number | Grams of fat per serving                 |
-| servingSize | number | Numeric quantity of one serving          |
-| servingUnit | string | Unit label (e.g., "g", "oz", "cup")      |
+| Field       | Type   | Description                               |
+| ----------- | ------ | ----------------------------------------- |
+| id          | number | Auto-incremented primary key              |
+| name        | string | Food name (e.g., "Chicken Breast")        |
+| category    | string | Optional label (e.g., "Protein", "Snack") |
+| calories    | number | Calories per serving                      |
+| protein     | number | Grams of protein per serving              |
+| carbs       | number | Grams of carbs per serving                |
+| fat         | number | Grams of fat per serving                  |
+| servingSize | number | Numeric quantity of one serving           |
+| servingUnit | string | Unit label (e.g., "g", "oz", "cup")       |
 
 ### Table: `weeks`
 
 One record per diet week. A week always starts on Monday.
 
-| Field       | Type   | Description                                     |
-|-------------|--------|-------------------------------------------------|
-| id          | number | Auto-incremented primary key                    |
+| Field       | Type   | Description                                        |
+| ----------- | ------ | -------------------------------------------------- |
+| id          | number | Auto-incremented primary key                       |
 | mondayDate  | string | ISO date string of the Monday (e.g., "2026-03-30") |
-| calorieGoal | number | Weekly calorie target                           |
-| proteinGoal | number | Weekly protein target in grams                  |
-| carbGoal    | number | Weekly carb target in grams                     |
-| fatGoal     | number | Weekly fat target in grams                      |
+| calorieGoal | number | Weekly calorie target                              |
+| proteinGoal | number | Weekly protein target in grams                     |
+| carbGoal    | number | Weekly carb target in grams                        |
+| fatGoal     | number | Weekly fat target in grams                         |
 
 ### Table: `logs`
 
 One record per food entry logged on a given day.
 
-| Field     | Type   | Description                                      |
-|-----------|--------|--------------------------------------------------|
-| id        | number | Auto-incremented primary key                     |
-| weekId    | number | Foreign key → `weeks.id`                         |
-| date      | string | ISO date string of the specific day (e.g., "2026-04-01") |
-| foodId    | number | Foreign key → `foods.id`                         |
-| servings  | number | Number of servings consumed (supports decimals)  |
+| Field     | Type   | Description                                                     |
+| --------- | ------ | --------------------------------------------------------------- |
+| id        | number | Auto-incremented primary key                                    |
+| weekId    | number | Foreign key → `weeks.id`                                        |
+| date      | string | ISO date string of the specific day (e.g., "2026-04-01")        |
+| foodId    | number | Foreign key → `foods.id`                                        |
+| servings  | number | Number of servings consumed (supports decimals)                 |
 | timestamp | number | Unix timestamp (milliseconds) for ordering entries within a day |
 
 ---
@@ -84,10 +84,10 @@ A diet week runs **Monday through Sunday**. Each week is identified by the ISO d
 function getMondayDate(date = new Date()) {
   const d = new Date(date);
   const day = d.getDay(); // 0 = Sunday, 1 = Monday, ...
-  const diff = (day === 0) ? -6 : 1 - day;
+  const diff = day === 0 ? -6 : 1 - day;
   d.setDate(d.getDate() + diff);
   d.setHours(0, 0, 0, 0);
-  return d.toISOString().split('T')[0]; // Returns "YYYY-MM-DD"
+  return d.toISOString().split("T")[0]; // Returns "YYYY-MM-DD"
 }
 ```
 
@@ -180,19 +180,19 @@ Weekly totals = sum of all log entry values across all 7 days.
 Use `useLiveQuery` for all data that needs to stay in sync with the UI:
 
 ```js
-import { useLiveQuery } from 'dexie-react-hooks';
-import { db } from './db';
+import { useLiveQuery } from "dexie-react-hooks";
+import { db } from "./db";
 
 // Get week record for a given Monday date string
 const week = useLiveQuery(
-  () => db.weeks.where('mondayDate').equals(mondayDate).first(),
-  [mondayDate]
+  () => db.weeks.where("mondayDate").equals(mondayDate).first(),
+  [mondayDate],
 );
 
 // Get all log entries for a specific day within a week
 const logs = useLiveQuery(
   () => db.logs.where({ weekId: week?.id, date: selectedDate }).toArray(),
-  [week?.id, selectedDate]
+  [week?.id, selectedDate],
 );
 
 // Get all foods for search
@@ -231,9 +231,9 @@ src/
 
 ## Static Defaults
 
-| Goal          | Daily  | Weekly (×7) |
-|---------------|--------|-------------|
-| Calories      | 2,000  | 14,000      |
-| Protein (g)   | 150    | 1,050       |
-| Carbs (g)     | 200    | 1,400       |
-| Fat (g)       | 65     | 455         |
+| Goal        | Daily | Weekly (×7) |
+| ----------- | ----- | ----------- |
+| Calories    | 2,000 | 14,000      |
+| Protein (g) | 150   | 1,050       |
+| Carbs (g)   | 200   | 1,400       |
+| Fat (g)     | 65    | 455         |

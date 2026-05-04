@@ -13,39 +13,39 @@
 ## MUI Theme Configuration
 
 ```js
-import { createTheme } from '@mui/material/styles';
-import { orange, amber } from '@mui/material/colors';
+import { createTheme } from "@mui/material/styles";
+import { orange, amber } from "@mui/material/colors";
 
 const theme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: "dark",
     background: {
-      default: '#0F1117',
-      paper:   '#181C24',
+      default: "#0F1117",
+      paper: "#181C24",
     },
     primary: {
-      main:          orange[500],   // '#FF9800'
-      light:         orange[300],   // '#FFB74D'
-      dark:          orange[700],   // '#F57C00'
-      contrastText:  '#0F1117',
+      main: orange[500], // '#FF9800'
+      light: orange[300], // '#FFB74D'
+      dark: orange[700], // '#F57C00'
+      contrastText: "#0F1117",
     },
     secondary: {
-      main: amber[400],             // '#FFCA28'
+      main: amber[400], // '#FFCA28'
     },
     text: {
-      primary:   '#F1F5F9',
-      secondary: '#94A3B8',
+      primary: "#F1F5F9",
+      secondary: "#94A3B8",
     },
-    divider: '#2D3340',
+    divider: "#2D3340",
     error: {
-      main: '#F87171',
+      main: "#F87171",
     },
   },
   typography: {
     fontFamily: '"DM Sans", sans-serif',
-    h5:  { fontWeight: 700, letterSpacing: '-0.02em' },
-    h6:  { fontWeight: 600, letterSpacing: '-0.01em' },
-    body2: { color: '#94A3B8' },
+    h5: { fontWeight: 700, letterSpacing: "-0.02em" },
+    h6: { fontWeight: 600, letterSpacing: "-0.01em" },
+    body2: { color: "#94A3B8" },
     // Numbers rendered in mono
     // Apply via sx={{ fontFamily: 'monospace' }} on Typography nodes showing counts/macros
   },
@@ -56,13 +56,13 @@ const theme = createTheme({
     MuiPaper: {
       defaultProps: { elevation: 0 },
       styleOverrides: {
-        root: { border: '1px solid #2D3340' },
+        root: { border: "1px solid #2D3340" },
       },
     },
     MuiButton: {
       defaultProps: { disableElevation: true },
       styleOverrides: {
-        containedPrimary: { color: '#0F1117', fontWeight: 700 }, // dark text on orange background
+        containedPrimary: { color: "#0F1117", fontWeight: 700 }, // dark text on orange background
       },
     },
     MuiChip: {
@@ -72,14 +72,14 @@ const theme = createTheme({
     },
     MuiLinearProgress: {
       styleOverrides: {
-        root: { borderRadius: 4, height: 6, backgroundColor: '#2D3340' },
-        bar:  { borderRadius: 4 },
+        root: { borderRadius: 4, height: 6, backgroundColor: "#2D3340" },
+        bar: { borderRadius: 4 },
       },
     },
     MuiTab: {
       styleOverrides: {
         root: {
-          textTransform: 'none',
+          textTransform: "none",
           fontWeight: 600,
           minWidth: 64,
         },
@@ -265,11 +265,11 @@ Rendered as `<Dialog fullWidth maxWidth="sm">`.
 
 `<DialogContent>` contains a `<Grid container spacing={2}>`:
 
-| Row | Fields |
-|-----|--------|
-| 1 | Name (xs=8) · Category (xs=4) |
-| 2 | Calories (xs=3) · Protein (xs=3) · Carbs (xs=3) · Fat (xs=3) |
-| 3 | Serving Size (xs=4) · Serving Unit (xs=4) |
+| Row | Fields                                                       |
+| --- | ------------------------------------------------------------ |
+| 1   | Name (xs=8) · Category (xs=4)                                |
+| 2   | Calories (xs=3) · Protein (xs=3) · Carbs (xs=3) · Fat (xs=3) |
+| 3   | Serving Size (xs=4) · Serving Unit (xs=4)                    |
 
 - All fields: `<TextField size="small" fullWidth />`
 - Number fields: `type="number"`, `inputProps={{ min: 0 }}`
@@ -284,36 +284,36 @@ Rendered as `<Dialog fullWidth maxWidth="sm">`.
 
 ## Macro Color Reference
 
-| Macro    | Color Token      | Hex       | Use for progress bars, chips, labels  |
-|----------|------------------|-----------|---------------------------------------|
-| Calories | `primary.main`   | `#FF9800` | Main accent (MUI `orange[500]`)       |
-| Protein  | —                | `#2DD4BF` | Teal (custom sx)                      |
-| Carbs    | `secondary.main` | `#FFCA28` | Amber (MUI `amber[400]`)              |
-| Fat      | —                | `#38BDF8` | Sky blue (custom sx)                  |
+| Macro    | Color Token      | Hex       | Use for progress bars, chips, labels |
+| -------- | ---------------- | --------- | ------------------------------------ |
+| Calories | `primary.main`   | `#FF9800` | Main accent (MUI `orange[500]`)      |
+| Protein  | —                | `#2DD4BF` | Teal (custom sx)                     |
+| Carbs    | `secondary.main` | `#FFCA28` | Amber (MUI `amber[400]`)             |
+| Fat      | —                | `#38BDF8` | Sky blue (custom sx)                 |
 
 ---
 
 ## Component Checklist (MUI Components Used)
 
-| Component         | Usage                                              |
-|-------------------|----------------------------------------------------|
-| `AppBar`          | Top navigation bar                                 |
-| `Toolbar`         | AppBar inner layout                                |
-| `IconButton`      | Nav controls, delete, edit, close, back            |
-| `Button`          | Primary actions, goals, add food                   |
-| `Typography`      | All text; monospace variant for numbers            |
-| `Paper`           | Cards (weekly summary, daily totals)               |
-| `LinearProgress`  | Macro and calorie progress bars                    |
-| `Tabs` / `Tab`    | Day selector strip                                 |
-| `List` / `ListItem` / `ListItemButton` | Log entries, food search results, food DB |
-| `Divider`         | Between list items                                 |
-| `TextField`       | Search, goals, food form, servings input           |
-| `Chip`            | Macro badges, category labels, calorie preview     |
-| `Dialog` / `DialogTitle` / `DialogContent` / `DialogActions` | Goals editor, food form |
-| `Drawer`          | Add food entry (bottom sheet)                      |
-| `Grid`            | Macro columns, food form field layout              |
-| `Stack`           | Flex layout for rows and vertical stacks           |
-| `Box`             | Layout primitives, drag handle, empty states       |
+| Component                                                    | Usage                                          |
+| ------------------------------------------------------------ | ---------------------------------------------- |
+| `AppBar`                                                     | Top navigation bar                             |
+| `Toolbar`                                                    | AppBar inner layout                            |
+| `IconButton`                                                 | Nav controls, delete, edit, close, back        |
+| `Button`                                                     | Primary actions, goals, add food               |
+| `Typography`                                                 | All text; monospace variant for numbers        |
+| `Paper`                                                      | Cards (weekly summary, daily totals)           |
+| `LinearProgress`                                             | Macro and calorie progress bars                |
+| `Tabs` / `Tab`                                               | Day selector strip                             |
+| `List` / `ListItem` / `ListItemButton`                       | Log entries, food search results, food DB      |
+| `Divider`                                                    | Between list items                             |
+| `TextField`                                                  | Search, goals, food form, servings input       |
+| `Chip`                                                       | Macro badges, category labels, calorie preview |
+| `Dialog` / `DialogTitle` / `DialogContent` / `DialogActions` | Goals editor, food form                        |
+| `Drawer`                                                     | Add food entry (bottom sheet)                  |
+| `Grid`                                                       | Macro columns, food form field layout          |
+| `Stack`                                                      | Flex layout for rows and vertical stacks       |
+| `Box`                                                        | Layout primitives, drag handle, empty states   |
 
 ---
 
