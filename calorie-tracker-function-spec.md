@@ -184,16 +184,10 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "./db";
 
 // Get week record for a given Monday date string
-const week = useLiveQuery(
-  () => db.weeks.where("mondayDate").equals(mondayDate).first(),
-  [mondayDate],
-);
+const week = useLiveQuery(() => db.weeks.where("mondayDate").equals(mondayDate).first(), [mondayDate]);
 
 // Get all log entries for a specific day within a week
-const logs = useLiveQuery(
-  () => db.logs.where({ weekId: week?.id, date: selectedDate }).toArray(),
-  [week?.id, selectedDate],
-);
+const logs = useLiveQuery(() => db.logs.where({ weekId: week?.id, date: selectedDate }).toArray(), [week?.id, selectedDate]);
 
 // Get all foods for search
 const foods = useLiveQuery(() => db.foods.toArray());

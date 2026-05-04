@@ -17,11 +17,7 @@ export async function ensureWeekExists(mondayDate: string): Promise<Week> {
   let week = await db.weeks.where("mondayDate").equals(mondayDate).first();
   if (week) return week;
   // Find most recent prior week
-  const prior = await db.weeks
-    .where("mondayDate")
-    .below(mondayDate)
-    .reverse()
-    .first();
+  const prior = await db.weeks.where("mondayDate").below(mondayDate).reverse().first();
   const goals = prior
     ? {
         calorieGoal: prior.calorieGoal,

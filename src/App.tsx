@@ -1,11 +1,5 @@
 import { useState } from "react";
-import {
-  ThemeProvider,
-  CssBaseline,
-  Container,
-  CircularProgress,
-  Box,
-} from "@mui/material";
+import { ThemeProvider, CssBaseline, Container, CircularProgress, Box } from "@mui/material";
 import { theme } from "./theme";
 
 import AppHeader from "./components/AppHeader";
@@ -26,18 +20,10 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Container
-        maxWidth="sm"
-        sx={{ minHeight: "100vh", bgcolor: "background.default", p: 0 }}
-      >
+      <Container maxWidth="sm" sx={{ minHeight: "100vh", bgcolor: "background.default", p: 0 }}>
         <AppHeader onFoodDbClick={handleFoodDbClick} />
         {loading ? (
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            minHeight="60vh"
-          >
+          <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
             <CircularProgress color="primary" />
           </Box>
         ) : (

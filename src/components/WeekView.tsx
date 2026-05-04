@@ -1,16 +1,5 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Stack,
-  Typography,
-  IconButton,
-  Button,
-  Paper,
-  LinearProgress,
-  Grid,
-  Tabs,
-  Tab,
-} from "@mui/material";
+import { Box, Stack, Typography, IconButton, Button, Paper, LinearProgress, Grid, Tabs, Tab } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import EditIcon from "@mui/icons-material/Edit";
@@ -19,13 +8,7 @@ import { db } from "../db";
 import { ensureWeekExists } from "../utils/ensureWeekExists";
 import DailyLog from "./DailyLog";
 import GoalsEditor from "./GoalsEditor";
-import {
-  getCurrentMondayDate,
-  getWeekDates,
-  formatWeekRange,
-  getDayAbbr,
-  getDateNumber,
-} from "../utils/date";
+import { getCurrentMondayDate, getWeekDates, formatWeekRange, getDayAbbr, getDateNumber } from "../utils/date";
 
 const today = new Date();
 const formatter = new Intl.DateTimeFormat("en-CA", {
@@ -38,10 +21,7 @@ const todayDateString = formatter.format(today);
 const WeekView: React.FC = () => {
   // State for week navigation
   const [mondayDate, setMondayDate] = useState(getCurrentMondayDate());
-  const week = useLiveQuery(
-    () => db.weeks.where("mondayDate").equals(mondayDate).first(),
-    [mondayDate],
-  );
+  const week = useLiveQuery(() => db.weeks.where("mondayDate").equals(mondayDate).first(), [mondayDate]);
   const weekDates = getWeekDates(mondayDate);
   const [selectedDayIndex, setSelectedDayIndex] = useState(() => {
     const todayStr = today.toISOString().split("T")[0];
@@ -94,60 +74,32 @@ const WeekView: React.FC = () => {
   const [goalsOpen, setGoalsOpen] = useState(false);
   const handleEditGoals = () => setGoalsOpen(true);
   const handleCloseGoals = () => setGoalsOpen(false);
-  const handleSaveGoals = async (goals: {
-    calorieGoal: number;
-    proteinGoal: number;
-    carbGoal: number;
-    fatGoal: number;
-  }) => {
+  const handleSaveGoals = async (goals: { calorieGoal: number; proteinGoal: number; carbGoal: number; fatGoal: number }) => {
     if (!week) return;
     await db.weeks.update(week.id!, goals);
   };
 
   // Progress calculations
-  const pct = (val: number, goal: number | undefined) =>
-    goal && goal > 0 ? Math.min(100, (val / goal) * 100) : 0;
+  const pct = (val: number, goal: number | undefined) => (goal && goal > 0 ? Math.min(100, (val / goal) * 100) : 0);
 
   return (
     <Box>
       {/* Week Header Bar */}
-      <Stack
-        direction="row"
-        alignItems="center"
-        justifyContent="space-between"
-        sx={{ px: 2, py: 1.5 }}
-      >
+      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 2, py: 1.5 }}>
         <IconButton aria-label="Previous week" onClick={handlePrevWeek}>
           <ChevronLeftIcon />
         </IconButton>
         <Typography variant="subtitle1" fontWeight={600}>
           {formatWeekRange(mondayDate)}
         </Typography>
-        <IconButton
-          aria-label="Next week"
-          onClick={handleNextWeek}
-          disabled={isCurrentWeek}
-        >
+        <IconButton aria-label="Next week" onClick={handleNextWeek} disabled={isCurrentWeek}>
           <ChevronRightIcon />
         </IconButton>
-        <Button
-          variant="outlined"
-          size="small"
-          startIcon={<EditIcon />}
-          sx={{ ml: 2 }}
-          onClick={handleEditGoals}
-        >
+        <Button variant="outlined" size="small" startIcon={<EditIcon />} sx={{ ml: 2 }} onClick={handleEditGoals}>
           Goals
         </Button>
         {/* Goals Editor Dialog */}
-        {week && (
-          <GoalsEditor
-            open={goalsOpen}
-            onClose={handleCloseGoals}
-            week={week}
-            onSave={handleSaveGoals}
-          />
-        )}
+        {week && <GoalsEditor open={goalsOpen} onClose={handleCloseGoals} week={week} onSave={handleSaveGoals} />}
       </Stack>
 
       {/* Weekly Summary Card */}
@@ -158,12 +110,7 @@ const WeekView: React.FC = () => {
         <Typography sx={{ fontFamily: "monospace", fontWeight: 700 }}>
           {Math.round(summary.calories)} / {week?.calorieGoal ?? "--"} kcal
         </Typography>
-        <LinearProgress
-          variant="determinate"
-          value={pct(summary.calories, week?.calorieGoal)}
-          color="primary"
-          sx={{ my: 1 }}
-        />
+        <LinearProgress variant="determinate" value={pct(summary.calories, week?.calorieGoal)} color="primary" sx={{ my: 1 }} />
         <Grid container spacing={2} sx={{ mt: 1 }}>
           <Grid size={{ xs: 4 }}>
             <Typography variant="caption" color="text.secondary">
@@ -188,11 +135,7 @@ const WeekView: React.FC = () => {
             <Typography sx={{ fontFamily: "monospace" }}>
               {Math.round(summary.carbs)}/{week?.carbGoal ?? "--"}g
             </Typography>
-            <LinearProgress
-              variant="determinate"
-              value={pct(summary.carbs, week?.carbGoal)}
-              color="secondary"
-            />
+            <LinearProgress variant="determinate" value={pct(summary.carbs, week?.carbGoal)} color="secondary" />
           </Grid>
           <Grid size={{ xs: 4 }}>
             <Typography variant="caption" color="text.secondary">
@@ -214,13 +157,7 @@ const WeekView: React.FC = () => {
       </Paper>
 
       {/* Day Selector Tabs */}
-      <Tabs
-        value={selectedDayIndex}
-        onChange={(_, idx) => setSelectedDayIndex(idx)}
-        variant="scrollable"
-        scrollButtons="auto"
-        sx={{ px: 1, mt: 2 }}
-      >
+      <Tabs value={selectedDayIndex} onChange={(_, idx) => setSelectedDayIndex(idx)} variant="scrollable" scrollButtons="auto" sx={{ px: 1, mt: 2 }}>
         {weekDates.map((date, _) => {
           const isToday = date === todayDateString;
           return (
@@ -260,11 +197,7 @@ const WeekView: React.FC = () => {
       </Tabs>
 
       {/* Daily Log Panel */}
-      <Box sx={{ mt: 2 }}>
-        {week && (
-          <DailyLog weekId={week.id} date={weekDates[selectedDayIndex]} />
-        )}
-      </Box>
+      <Box sx={{ mt: 2 }}>{week && <DailyLog weekId={week.id} date={weekDates[selectedDayIndex]} />}</Box>
     </Box>
   );
 };

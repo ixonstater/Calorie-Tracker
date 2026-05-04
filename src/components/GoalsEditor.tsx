@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Stack,
-  TextField,
-  Button,
-} from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Stack, TextField, Button } from "@mui/material";
 
 interface GoalsEditorProps {
   open: boolean;
@@ -19,20 +11,10 @@ interface GoalsEditorProps {
     carbGoal: number;
     fatGoal: number;
   };
-  onSave: (goals: {
-    calorieGoal: number;
-    proteinGoal: number;
-    carbGoal: number;
-    fatGoal: number;
-  }) => void;
+  onSave: (goals: { calorieGoal: number; proteinGoal: number; carbGoal: number; fatGoal: number }) => void;
 }
 
-const GoalsEditor: React.FC<GoalsEditorProps> = ({
-  open,
-  onClose,
-  week,
-  onSave,
-}) => {
+const GoalsEditor: React.FC<GoalsEditorProps> = ({ open, onClose, week, onSave }) => {
   const [calorieGoal, setCalorieGoal] = useState<number | "">(week.calorieGoal);
   const [proteinGoal, setProteinGoal] = useState<number | "">(week.proteinGoal);
   const [carbGoal, setCarbGoal] = useState<number | "">(week.carbGoal);
@@ -43,12 +25,7 @@ const GoalsEditor: React.FC<GoalsEditorProps> = ({
     const safeProteinGoal = proteinGoal === "" ? 0 : Number(proteinGoal);
     const safeCarbGoal = carbGoal === "" ? 0 : Number(carbGoal);
     const safeFatGoal = fatGoal === "" ? 0 : Number(fatGoal);
-    if (
-      [safeCalorieGoal, safeProteinGoal, safeCarbGoal, safeFatGoal].some(
-        (v) => !Number.isFinite(v) || v <= 0,
-      )
-    )
-      return;
+    if ([safeCalorieGoal, safeProteinGoal, safeCarbGoal, safeFatGoal].some((v) => !Number.isFinite(v) || v <= 0)) return;
     onSave({
       calorieGoal: safeCalorieGoal,
       proteinGoal: safeProteinGoal,
@@ -70,11 +47,7 @@ const GoalsEditor: React.FC<GoalsEditorProps> = ({
             size="small"
             label="Calories (kcal/week)"
             value={calorieGoal}
-            onChange={(e) =>
-              setCalorieGoal(
-                e.target.value === "" ? "" : Number(e.target.value),
-              )
-            }
+            onChange={(e) => setCalorieGoal(e.target.value === "" ? "" : Number(e.target.value))}
             helperText={`= ${perDay(calorieGoal)} kcal/day`}
             fullWidth
           />
@@ -83,11 +56,7 @@ const GoalsEditor: React.FC<GoalsEditorProps> = ({
             size="small"
             label="Protein (g/week)"
             value={proteinGoal}
-            onChange={(e) =>
-              setProteinGoal(
-                e.target.value === "" ? "" : Number(e.target.value),
-              )
-            }
+            onChange={(e) => setProteinGoal(e.target.value === "" ? "" : Number(e.target.value))}
             helperText={`= ${perDay(proteinGoal)} g/day`}
             fullWidth
           />
@@ -96,9 +65,7 @@ const GoalsEditor: React.FC<GoalsEditorProps> = ({
             size="small"
             label="Carbs (g/week)"
             value={carbGoal}
-            onChange={(e) =>
-              setCarbGoal(e.target.value === "" ? "" : Number(e.target.value))
-            }
+            onChange={(e) => setCarbGoal(e.target.value === "" ? "" : Number(e.target.value))}
             helperText={`= ${perDay(carbGoal)} g/day`}
             fullWidth
           />
@@ -107,9 +74,7 @@ const GoalsEditor: React.FC<GoalsEditorProps> = ({
             size="small"
             label="Fat (g/week)"
             value={fatGoal}
-            onChange={(e) =>
-              setFatGoal(e.target.value === "" ? "" : Number(e.target.value))
-            }
+            onChange={(e) => setFatGoal(e.target.value === "" ? "" : Number(e.target.value))}
             helperText={`= ${perDay(fatGoal)} g/day`}
             fullWidth
           />

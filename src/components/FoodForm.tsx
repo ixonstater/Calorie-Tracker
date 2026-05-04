@@ -1,26 +1,8 @@
 import React, { useState } from "react";
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Grid,
-  TextField,
-  Button,
-  MenuItem,
-} from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Grid, TextField, Button, MenuItem } from "@mui/material";
 import { Food } from "../db";
 
-const categories = [
-  "Protein",
-  "Carbs",
-  "Fat",
-  "Dairy",
-  "Vegetable",
-  "Fruit",
-  "Snack",
-  "Other",
-];
+const categories = ["Protein", "Carbs", "Fat", "Dairy", "Vegetable", "Fruit", "Snack", "Other"];
 const units = ["g", "oz", "cup", "ml", "tbsp", "tsp", "piece"];
 
 interface FoodFormProps {
@@ -30,12 +12,7 @@ interface FoodFormProps {
   initial?: Partial<Food>;
 }
 
-const FoodForm: React.FC<FoodFormProps> = ({
-  open,
-  onClose,
-  onSave,
-  initial,
-}) => {
+const FoodForm: React.FC<FoodFormProps> = ({ open, onClose, onSave, initial }) => {
   const [name, setName] = useState(initial?.name ?? "");
   const [category, setCategory] = useState(initial?.category ?? "Other");
   const [calories, setCalories] = useState(initial?.calories ?? "");
@@ -52,15 +29,7 @@ const FoodForm: React.FC<FoodFormProps> = ({
     const safeCarbs = carbs === "" ? 0 : Number(carbs);
     const safeFat = fat === "" ? 0 : Number(fat);
     const safeServingSize = servingSize === "" ? 0 : Number(servingSize);
-    if (
-      !name ||
-      safeCalories <= 0 ||
-      safeProtein < 0 ||
-      safeCarbs < 0 ||
-      safeFat < 0 ||
-      safeServingSize <= 0
-    )
-      return;
+    if (!name || safeCalories <= 0 || safeProtein < 0 || safeCarbs < 0 || safeFat < 0 || safeServingSize <= 0) return;
     onSave({
       name,
       category,
@@ -80,23 +49,10 @@ const FoodForm: React.FC<FoodFormProps> = ({
       <DialogContent>
         <Grid container spacing={2} mt={1}>
           <Grid size={{ xs: 12 }}>
-            <TextField
-              label="Name"
-              size="small"
-              fullWidth
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
+            <TextField label="Name" size="small" fullWidth value={name} onChange={(e) => setName(e.target.value)} />
           </Grid>
           <Grid size={{ xs: 12 }}>
-            <TextField
-              label="Category"
-              size="small"
-              select
-              fullWidth
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            >
+            <TextField label="Category" size="small" select fullWidth value={category} onChange={(e) => setCategory(e.target.value)}>
               {categories.map((cat) => (
                 <MenuItem key={cat} value={cat}>
                   {cat}
@@ -105,76 +61,22 @@ const FoodForm: React.FC<FoodFormProps> = ({
             </TextField>
           </Grid>
           <Grid size={{ xs: 6 }}>
-            <TextField
-              label="Calories"
-              type="number"
-              size="small"
-              fullWidth
-              value={calories}
-              onChange={(e) =>
-                setCalories(e.target.value === "" ? "" : Number(e.target.value))
-              }
-            />
+            <TextField label="Calories" type="number" size="small" fullWidth value={calories} onChange={(e) => setCalories(e.target.value === "" ? "" : Number(e.target.value))} />
           </Grid>
           <Grid size={{ xs: 6 }}>
-            <TextField
-              label="Protein"
-              type="number"
-              size="small"
-              fullWidth
-              value={protein}
-              onChange={(e) =>
-                setProtein(e.target.value === "" ? "" : Number(e.target.value))
-              }
-            />
+            <TextField label="Protein" type="number" size="small" fullWidth value={protein} onChange={(e) => setProtein(e.target.value === "" ? "" : Number(e.target.value))} />
           </Grid>
           <Grid size={{ xs: 6 }}>
-            <TextField
-              label="Carbs"
-              type="number"
-              size="small"
-              fullWidth
-              value={carbs}
-              onChange={(e) =>
-                setCarbs(e.target.value === "" ? "" : Number(e.target.value))
-              }
-            />
+            <TextField label="Carbs" type="number" size="small" fullWidth value={carbs} onChange={(e) => setCarbs(e.target.value === "" ? "" : Number(e.target.value))} />
           </Grid>
           <Grid size={{ xs: 6 }}>
-            <TextField
-              label="Fat"
-              type="number"
-              size="small"
-              fullWidth
-              value={fat}
-              onChange={(e) =>
-                setFat(e.target.value === "" ? "" : Number(e.target.value))
-              }
-            />
+            <TextField label="Fat" type="number" size="small" fullWidth value={fat} onChange={(e) => setFat(e.target.value === "" ? "" : Number(e.target.value))} />
           </Grid>
           <Grid size={{ xs: 6 }}>
-            <TextField
-              label="Serving Size"
-              type="number"
-              size="small"
-              fullWidth
-              value={servingSize}
-              onChange={(e) =>
-                setServingSize(
-                  e.target.value === "" ? "" : Number(e.target.value),
-                )
-              }
-            />
+            <TextField label="Serving Size" type="number" size="small" fullWidth value={servingSize} onChange={(e) => setServingSize(e.target.value === "" ? "" : Number(e.target.value))} />
           </Grid>
           <Grid size={{ xs: 6 }}>
-            <TextField
-              label="Serving Unit"
-              size="small"
-              select
-              fullWidth
-              value={servingUnit}
-              onChange={(e) => setServingUnit(e.target.value)}
-            >
+            <TextField label="Serving Unit" size="small" select fullWidth value={servingUnit} onChange={(e) => setServingUnit(e.target.value)}>
               {units.map((unit) => (
                 <MenuItem key={unit} value={unit}>
                   {unit}

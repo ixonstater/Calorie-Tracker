@@ -8,14 +8,9 @@ const DEFAULTS = {
   fatGoal: 455,
 };
 
-export async function ensureCurrentWeek(
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
-) {
+export async function ensureCurrentWeek(setLoading: React.Dispatch<React.SetStateAction<boolean>>) {
   const mondayDate = getCurrentMondayDate();
-  const currentWeek = await db.weeks
-    .where("mondayDate")
-    .equals(mondayDate)
-    .first();
+  const currentWeek = await db.weeks.where("mondayDate").equals(mondayDate).first();
   if (currentWeek) {
     setLoading(false);
     return;
@@ -31,10 +26,7 @@ export async function ensureCurrentWeek(
       fatGoal: prior?.fatGoal ?? DEFAULTS.fatGoal,
     });
   } catch (e) {
-    console.warn(
-      "An error occurred while saving a new week object.  This is probably fine.",
-      e,
-    );
+    console.warn("An error occurred while saving a new week object.  This is probably fine.", e);
   }
   setLoading(false);
 }

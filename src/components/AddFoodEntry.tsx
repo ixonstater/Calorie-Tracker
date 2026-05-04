@@ -1,16 +1,5 @@
 import React, { useState } from "react";
-import {
-  Drawer,
-  Box,
-  Typography,
-  TextField,
-  List,
-  ListItemButton,
-  ListItemText,
-  Chip,
-  Button,
-  Divider,
-} from "@mui/material";
+import { Drawer, Box, Typography, TextField, List, ListItemButton, ListItemText, Chip, Button, Divider } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import AddIcon from "@mui/icons-material/Add";
 import { useLiveQuery } from "dexie-react-hooks";
@@ -23,21 +12,14 @@ interface AddFoodEntryProps {
   date: string;
 }
 
-const AddFoodEntry: React.FC<AddFoodEntryProps> = ({
-  open,
-  onClose,
-  weekId,
-  date,
-}) => {
+const AddFoodEntry: React.FC<AddFoodEntryProps> = ({ open, onClose, weekId, date }) => {
   const foods = useLiveQuery(() => db.foods.toArray(), []);
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState<Food | null>(null);
   const [servings, setServings] = useState<number | "">(1);
   const [saving, setSaving] = useState(false);
 
-  const filteredFoods =
-    foods?.filter((f) => f.name.toLowerCase().includes(search.toLowerCase())) ??
-    [];
+  const filteredFoods = foods?.filter((f) => f.name.toLowerCase().includes(search.toLowerCase())) ?? [];
 
   const handleSelect = (food: Food) => {
     setSelected(food);
@@ -62,12 +44,7 @@ const AddFoodEntry: React.FC<AddFoodEntryProps> = ({
   };
 
   return (
-    <Drawer
-      anchor="bottom"
-      open={open}
-      onClose={onClose}
-      PaperProps={{ sx: { maxHeight: "80vh", borderRadius: "16px 16px 0 0" } }}
-    >
+    <Drawer anchor="bottom" open={open} onClose={onClose} PaperProps={{ sx: { maxHeight: "80vh", borderRadius: "16px 16px 0 0" } }}>
       <Box sx={{ width: "100%", px: 2, pt: 1 }}>
         {/* Drag handle */}
         <Box
@@ -106,8 +83,7 @@ const AddFoodEntry: React.FC<AddFoodEntryProps> = ({
               {selected.name}
             </Typography>
             <Typography color="text.secondary" sx={{ mb: 1 }}>
-              1 serving = {selected.calories} kcal · P {selected.protein}g · C{" "}
-              {selected.carbs}g · F {selected.fat}g
+              1 serving = {selected.calories} kcal · P {selected.protein}g · C {selected.carbs}g · F {selected.fat}g
             </Typography>
             <TextField
               type="number"
@@ -121,20 +97,8 @@ const AddFoodEntry: React.FC<AddFoodEntryProps> = ({
               }}
               sx={{ width: 120, mr: 2 }}
             />
-            <Chip
-              label={`≈ ${Math.round((servings === "" ? 0 : servings) * selected.calories)} kcal`}
-              color="primary"
-              size="small"
-              sx={{ ml: 2 }}
-            />
-            <Button
-              variant="contained"
-              fullWidth
-              sx={{ mt: 2 }}
-              onClick={handleAdd}
-              disabled={servings === "" || servings <= 0 || saving}
-              startIcon={<AddIcon />}
-            >
+            <Chip label={`≈ ${Math.round((servings === "" ? 0 : servings) * selected.calories)} kcal`} color="primary" size="small" sx={{ ml: 2 }} />
+            <Button variant="contained" fullWidth sx={{ mt: 2 }} onClick={handleAdd} disabled={servings === "" || servings <= 0 || saving} startIcon={<AddIcon />}>
               Add to Log
             </Button>
           </Box>

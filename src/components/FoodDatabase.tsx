@@ -1,17 +1,5 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Typography,
-  IconButton,
-  Button,
-  List,
-  ListItem,
-  ListItemText,
-  Chip,
-  Divider,
-  TextField,
-  Stack,
-} from "@mui/material";
+import { Box, Typography, IconButton, Button, List, ListItem, ListItemText, Chip, Divider, TextField, Stack } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
@@ -27,9 +15,7 @@ const FoodDatabase: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   const [formOpen, setFormOpen] = useState(false);
   const [editFood, setEditFood] = useState<Food | null>(null);
 
-  const filtered =
-    foods?.filter((f) => f.name.toLowerCase().includes(search.toLowerCase())) ??
-    [];
+  const filtered = foods?.filter((f) => f.name.toLowerCase().includes(search.toLowerCase())) ?? [];
 
   const handleAdd = () => {
     setEditFood(null);
@@ -53,24 +39,14 @@ const FoodDatabase: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   return (
     <Box>
       {/* Header */}
-      <Stack
-        direction="row"
-        alignItems="center"
-        spacing={2}
-        sx={{ px: 2, pt: 2 }}
-      >
+      <Stack direction="row" alignItems="center" spacing={2} sx={{ px: 2, pt: 2 }}>
         <IconButton onClick={onBack} aria-label="Back">
           <ArrowBackIcon />
         </IconButton>
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
           Food Database
         </Typography>
-        <Button
-          variant="contained"
-          size="small"
-          startIcon={<AddIcon />}
-          onClick={handleAdd}
-        >
+        <Button variant="contained" size="small" startIcon={<AddIcon />} onClick={handleAdd}>
           New Food
         </Button>
       </Stack>
@@ -90,9 +66,7 @@ const FoodDatabase: React.FC<{ onBack: () => void }> = ({ onBack }) => {
       <List>
         {filtered.length === 0 && (
           <Box textAlign="center" py={6}>
-            <Typography color="text.secondary">
-              No foods yet. Add your first food to get started.
-            </Typography>
+            <Typography color="text.secondary">No foods yet. Add your first food to get started.</Typography>
           </Box>
         )}
         {filtered.map((food) => (
@@ -100,19 +74,10 @@ const FoodDatabase: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             <ListItem
               secondaryAction={
                 <>
-                  <IconButton
-                    edge="end"
-                    aria-label="Edit"
-                    onClick={() => handleEdit(food)}
-                  >
+                  <IconButton edge="end" aria-label="Edit" onClick={() => handleEdit(food)}>
                     <EditIcon fontSize="small" />
                   </IconButton>
-                  <IconButton
-                    edge="end"
-                    aria-label="Delete"
-                    color="error"
-                    onClick={() => handleDelete(food.id!)}
-                  >
+                  <IconButton edge="end" aria-label="Delete" color="error" onClick={() => handleDelete(food.id!)}>
                     <DeleteIcon fontSize="small" />
                   </IconButton>
                 </>
@@ -124,15 +89,12 @@ const FoodDatabase: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                     <Typography fontWeight={600} component="span">
                       {food.name}
                     </Typography>
-                    {food.category && (
-                      <Chip label={food.category} size="small" sx={{ ml: 1 }} />
-                    )}
+                    {food.category && <Chip label={food.category} size="small" sx={{ ml: 1 }} />}
                   </>
                 }
                 secondary={
                   <Typography color="text.secondary">
-                    {food.calories} kcal · P {food.protein}g · C {food.carbs}g ·
-                    F {food.fat}g · per {food.servingSize} {food.servingUnit}
+                    {food.calories} kcal · P {food.protein}g · C {food.carbs}g · F {food.fat}g · per {food.servingSize} {food.servingUnit}
                   </Typography>
                 }
               />
@@ -143,13 +105,7 @@ const FoodDatabase: React.FC<{ onBack: () => void }> = ({ onBack }) => {
       </List>
 
       {/* Food Form Dialog */}
-      <FoodForm
-        key={editFood?.id || "new"}
-        open={formOpen}
-        onClose={() => setFormOpen(false)}
-        onSave={handleSave}
-        initial={editFood ?? undefined}
-      />
+      <FoodForm key={editFood?.id || "new"} open={formOpen} onClose={() => setFormOpen(false)} onSave={handleSave} initial={editFood ?? undefined} />
     </Box>
   );
 };

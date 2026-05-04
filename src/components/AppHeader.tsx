@@ -20,19 +20,13 @@ const AppHeader: React.FC<AppHeaderProps> = ({ onFoodDbClick }) => {
         boxShadow: 0,
       }}
     >
-      <Toolbar
-        sx={{ display: "flex", justifyContent: "space-between", minHeight: 56 }}
-      >
+      <Toolbar sx={{ display: "flex", justifyContent: "space-between", minHeight: 56 }}>
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <Typography variant="h6" color="primary" fontWeight={700}>
             Calorie Tracker
           </Typography>
         </Box>
-        <IconButton
-          aria-label="Food DB"
-          color="inherit"
-          onClick={onFoodDbClick}
-        >
+        <IconButton aria-label="Food DB" color="inherit" onClick={onFoodDbClick}>
           <FoodIcon />
         </IconButton>
       </Toolbar>
