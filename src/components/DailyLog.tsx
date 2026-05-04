@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Paper, Typography, Chip, List, ListItem, ListItemText, IconButton, Divider, Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import AddFoodEntry from "./AddFoodEntry";
+import AddUnIndexedFood from "./AddUnIndexedFood";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "../db";
@@ -19,6 +20,7 @@ const macroColors = {
 
 const DailyLog: React.FC<DailyLogProps> = ({ weekId, date }) => {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const [drawerUnIndexedOpen, setDrawerUnIndexedOpen] = React.useState(false);
   // Get all foods and logs for this day
   const foods = useLiveQuery(() => db.foods.toArray(), []);
   const logs = useLiveQuery(() => db.logs.where({ weekId, date }).sortBy("timestamp"), [weekId, date]);
@@ -99,11 +101,12 @@ const DailyLog: React.FC<DailyLogProps> = ({ weekId, date }) => {
         <Button variant="contained" color="primary" sx={{ width: "100%", maxWidth: 270, textAlign: "left", marginBottom: 2 }} startIcon={<AddIcon />} onClick={() => setDrawerOpen(true)}>
           Log Food
         </Button>
-        <Button variant="contained" color="primary" sx={{ width: "100%", maxWidth: 270, textAlign: "left" }} startIcon={<AddIcon />}>
+        <Button variant="contained" color="primary" sx={{ width: "100%", maxWidth: 270, textAlign: "left" }} startIcon={<AddIcon />} onClick={() => setDrawerUnIndexedOpen(true)}>
           Log Un-Indexed Food
         </Button>
       </Box>
       <AddFoodEntry open={drawerOpen} onClose={() => setDrawerOpen(false)} weekId={weekId!} date={date} />
+      <AddUnIndexedFood open={drawerUnIndexedOpen} onClose={() => setDrawerUnIndexedOpen(false)} weekId={weekId!} date={date} />
     </Box>
   );
 };
