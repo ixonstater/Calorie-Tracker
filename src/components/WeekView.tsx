@@ -24,8 +24,7 @@ const WeekView: React.FC = () => {
   const week = useLiveQuery(() => db.weeks.where("mondayDate").equals(mondayDate).first(), [mondayDate]);
   const weekDates = getWeekDates(mondayDate);
   const [selectedDayIndex, setSelectedDayIndex] = useState(() => {
-    const todayStr = today.toISOString().split("T")[0];
-    return weekDates.indexOf(todayStr) !== -1 ? weekDates.indexOf(todayStr) : 0;
+    return weekDates.indexOf(todayDateString) !== -1 ? weekDates.indexOf(todayDateString) : 0;
   });
 
   // Weekly summary calculation
