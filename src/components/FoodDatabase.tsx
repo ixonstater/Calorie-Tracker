@@ -69,39 +69,42 @@ const FoodDatabase: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             <Typography color="text.secondary">No foods yet. Add your first food to get started.</Typography>
           </Box>
         )}
-        {filtered.map((food) => (
-          <React.Fragment key={food.id}>
-            <ListItem
-              secondaryAction={
-                <>
-                  <IconButton edge="end" aria-label="Edit" onClick={() => handleEdit(food)}>
-                    <EditIcon fontSize="small" />
-                  </IconButton>
-                  <IconButton edge="end" aria-label="Delete" color="error" onClick={() => handleDelete(food.id!)}>
-                    <DeleteIcon fontSize="small" />
-                  </IconButton>
-                </>
-              }
-            >
-              <ListItemText
-                primary={
-                  <>
-                    <Typography fontWeight={600} component="span">
-                      {food.name}
-                    </Typography>
-                    {food.category && <Chip label={food.category} size="small" sx={{ ml: 1 }} />}
-                  </>
-                }
-                secondary={
-                  <Typography color="text.secondary">
-                    {food.calories} kcal · P {food.protein}g · C {food.carbs}g · F {food.fat}g · per {food.servingSize} {food.servingUnit}
-                  </Typography>
-                }
-              />
-            </ListItem>
-            <Divider component="li" />
-          </React.Fragment>
-        ))}
+        {filtered.map(
+          (food) =>
+            !food.unIndexed!! && (
+              <React.Fragment key={food.id}>
+                <ListItem
+                  secondaryAction={
+                    <>
+                      <IconButton edge="end" aria-label="Edit" onClick={() => handleEdit(food)}>
+                        <EditIcon fontSize="small" />
+                      </IconButton>
+                      <IconButton edge="end" aria-label="Delete" color="error" onClick={() => handleDelete(food.id!)}>
+                        <DeleteIcon fontSize="small" />
+                      </IconButton>
+                    </>
+                  }
+                >
+                  <ListItemText
+                    primary={
+                      <>
+                        <Typography fontWeight={600} component="span">
+                          {food.name}
+                        </Typography>
+                        {food.category && <Chip label={food.category} size="small" sx={{ ml: 1 }} />}
+                      </>
+                    }
+                    secondary={
+                      <Typography color="text.secondary">
+                        {food.calories} kcal · P {food.protein}g · C {food.carbs}g · F {food.fat}g · per {food.servingSize} {food.servingUnit}
+                      </Typography>
+                    }
+                  />
+                </ListItem>
+                <Divider component="li" />
+              </React.Fragment>
+            ),
+        )}
       </List>
 
       {/* Food Form Dialog */}

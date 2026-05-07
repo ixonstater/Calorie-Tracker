@@ -10,6 +10,7 @@ export interface Food {
   fat: number;
   servingSize: number;
   servingUnit: string;
+  unIndexed?: boolean;
 }
 
 export interface Week {

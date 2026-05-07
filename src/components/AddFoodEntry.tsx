@@ -69,12 +69,15 @@ const AddFoodEntry: React.FC<AddFoodEntryProps> = ({ open, onClose, weekId, date
           sx={{ my: 2 }}
         />
         <List>
-          {filteredFoods.map((food) => (
-            <ListItemButton key={food.id} onClick={() => handleSelect(food)}>
-              <ListItemText primary={food.name} />
-              <Chip label={`${food.calories} kcal`} size="small" />
-            </ListItemButton>
-          ))}
+          {filteredFoods.map(
+            (food) =>
+              !food.unIndexed!! && (
+                <ListItemButton key={food.id} onClick={() => handleSelect(food)}>
+                  <ListItemText primary={food.name} />
+                  <Chip label={`${food.calories} kcal`} size="small" />
+                </ListItemButton>
+              ),
+          )}
         </List>
         {selected && (
           <Box sx={{ mt: 2 }}>

@@ -34,6 +34,7 @@ const AddUnIndexedFood: React.FC<AddUnIndexedFoodProps> = ({ open, onClose, week
         fat: 0,
         servingSize: 1,
         servingUnit: "serving",
+        unIndexed: true,
       };
 
       const foodId = await db.foods.add(newFood);

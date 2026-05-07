@@ -39,6 +39,7 @@ const FoodForm: React.FC<FoodFormProps> = ({ open, onClose, onSave, initial }) =
       fat: safeFat,
       servingSize: safeServingSize,
       servingUnit,
+      unIndexed: false,
     });
     onClose();
   };

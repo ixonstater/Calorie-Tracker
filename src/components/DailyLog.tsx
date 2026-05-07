@@ -14,7 +14,7 @@ interface DailyLogProps {
 
 const macroColors = {
   protein: { bgcolor: "#134E4A", color: "#2DD4BF" },
-  carbs: { bgcolor: "#F59E42", color: "#FFCA28" },
+  carbs: { bgcolor: "#FE8200", color: "#FFDC71" },
   fat: { bgcolor: "#0E3A5E", color: "#38BDF8" },
 };
 
