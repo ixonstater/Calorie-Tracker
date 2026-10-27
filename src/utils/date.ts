@@ -1,18 +1,13 @@
 // Date utility functions for week logic
 
-// Returns ISO date string for the Monday of the week containing the given date
-export function getMondayDate(date = new Date()): string {
-  const d = new Date(date);
+// Returns ISO date string for the current week's Monday
+export function getCurrentMondayDate(): string {
+  const d = new Date();
   const day = d.getDay(); // 0 = Sunday, 1 = Monday, ...
   const diff = day === 0 ? -6 : 1 - day;
   d.setDate(d.getDate() + diff);
   d.setHours(0, 0, 0, 0);
   return d.toISOString().split("T")[0]; // 'YYYY-MM-DD'
-}
-
-// Returns ISO date string for the current week's Monday
-export function getCurrentMondayDate(): string {
-  return getMondayDate(new Date());
 }
 
 // Returns array of ISO date strings for all days in a week starting from given Monday

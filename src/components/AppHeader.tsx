@@ -1,13 +1,9 @@
 import React from "react";
-import { AppBar, Toolbar, Typography, IconButton, Box } from "@mui/material";
+import { AppBar, Toolbar, Typography, Box } from "@mui/material";
 import { useState } from "react";
 import { getRandomFoodIcon } from "./randomFoodIcon";
 
-interface AppHeaderProps {
-  onFoodDbClick: () => void;
-}
-
-const AppHeader: React.FC<AppHeaderProps> = ({ onFoodDbClick }) => {
+const AppHeader: React.FC = () => {
   // Pick a random food icon on mount
   const [FoodIcon] = useState(() => getRandomFoodIcon());
   return (
@@ -23,12 +19,10 @@ const AppHeader: React.FC<AppHeaderProps> = ({ onFoodDbClick }) => {
       <Toolbar sx={{ display: "flex", justifyContent: "space-between", minHeight: 56 }}>
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <Typography variant="h6" color="primary" fontWeight={700}>
-            Calorie Tracker
+            Calorie Tracker v2
           </Typography>
         </Box>
-        <IconButton aria-label="Food DB" color="inherit" onClick={onFoodDbClick}>
-          <FoodIcon />
-        </IconButton>
+        <FoodIcon />
       </Toolbar>
     </AppBar>
   );
